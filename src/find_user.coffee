@@ -26,14 +26,14 @@ Zap.find_user_by_id = (bundle, id, subscription_plan) ->
 
 Zap.find_user_by_query = (bundle, query, subscription_plan) ->
   user = null
-  if valueExists query
+  if Zap.valueExists query
     response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/users?query=#{encodeURIComponent(query)}#{Zap.find_user_subscription_plan_to_query(subscription_plan)}&limit=1")
     if response.users.length > 0
       user = response.users[0]
   user
 
 Zap.find_user_subscription_plan_to_query = (subscription_plan) ->
-  if valueExists subscription_plan
+  if Zap.valueExists subscription_plan
     subscription_plan = "&subscription_plan=#{encodeURIComponent(subscription_plan)}"
   else
     subscription_plan = ""

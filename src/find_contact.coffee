@@ -35,11 +35,11 @@ Zap.find_user_or_contact = (bundle, object) ->
     found_object ?= Zap.find_user_by_id(bundle, bundle.name)
     found_object ?= Zap.find_contact_by_id(bundle, bundle.name)
     
-  else if valueExists object.email
+  else if Zap.valueExists object.email
     found_object ?= Zap.find_user_by_query(bundle, object.email)
     found_object ?= Zap.find_contact_by_email(bundle, object.email)
     
-  else if valueExists object.name
+  else if Zap.valueExists object.name
     found_object ?= Zap.find_user_by_query(bundle, object.name)
     found_object ?= Zap.find_contact_by_name(bundle, object.name)
   
@@ -51,10 +51,10 @@ Zap.find_contact = (bundle, object, search_contact_type) ->
   if isFinite(object.name)
     contact ?= Zap.find_contact_by_id(bundle, object.name, search_contact_type)
   # if email set, try to find by it
-  else if valueExists object.email 
+  else if Zap.valueExists object.email 
     contact ?= Zap.find_contact_by_email(bundle, object.email, search_contact_type)
   # If no email or not found, try with the name
-  else if valueExists object.name
+  else if Zap.valueExists object.name
     contact ?= Zap.find_contact_by_name(bundle, object.name, search_contact_type)
   contact
 
@@ -69,7 +69,7 @@ Zap.find_contact_by_id = (bundle, id, search_contact_type) ->
 Zap.find_contact_by_email = (bundle, email, search_contact_type) ->
   contact = null
   # Sanity check on email
-  if valueExists email
+  if Zap.valueExists email
     response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/contacts?query=#{encodeURIComponent(email)}&limit=1#{Zap.find_contact_type_to_query(search_contact_type)}")
     if response.contacts.length > 0
       contact = response.contacts[0]
@@ -77,18 +77,18 @@ Zap.find_contact_by_email = (bundle, email, search_contact_type) ->
 
 Zap.find_contact_by_name = (bundle, name, search_contact_type) ->
   contact = null
-  if valueExists name
+  if Zap.valueExists name
     response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/contacts?name=#{encodeURIComponent(name)}&limit=1#{Zap.find_contact_type_to_query(search_contact_type)}")
     if response.contacts.length > 0
       contact = response.contacts[0]
   contact
 
 Zap.create_contact = (bundle, object, contact_type) ->
-  if valueMissing object.name
+  if Zap.valueMissing object.name
     throw new HaltedException("Could not create #{contact_type} without a name")
   data = { "type": contact_type, "name": object.name }
   # if email set, add it
-  if valueExists object.email
+  if Zap.valueExists object.email
     data["email_addresses"] = [{"name": "Work", "address": object.email}]
   response = Zap.make_post_request(bundle, "https://app.goclio.com/api/v2/contacts", JSON.stringify({"contact": data}))
   unless response.hasOwnProperty("contact")
@@ -96,7 +96,7 @@ Zap.create_contact = (bundle, object, contact_type) ->
   response.contact
   
 Zap.find_contact_type_to_query = (search_contact_type) ->
-  if valueExists search_contact_type
+  if Zap.valueExists search_contact_type
     search_contact_type= "&type=#{encodeURIComponent(search_contact_type)}"
   else
     search_contact_type= ""

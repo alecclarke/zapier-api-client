@@ -43,7 +43,7 @@ Zap.transform_nested_attributes = (object) ->
 Zap.flatten_array = (array, default_keys) ->
   # Find our defaults
   if array.length > 0
-    data = (array.filter (x) -> (x.hasOwnProperty("default_email") and x.default_email == true) or (x.hasOwnProperty("default_number") and x.default_number == true))[0]
+    data = _.filter(array, (x) -> (x.hasOwnProperty("default_email") and x.default_email == true) or (x.hasOwnProperty("default_number") and x.default_number == true))[0]
   # If none found, user first item
   data ?= array[0]
   # If array empty use empty hash

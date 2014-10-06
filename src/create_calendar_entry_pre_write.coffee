@@ -15,8 +15,7 @@ Zap.create_calendar_entry_pre_write = (bundle) ->
     data.end_date_time = object.end_at
   
   response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/calendars")
-  users_calendar = response.calendars.filter (x) ->
-    x.type == "UserCalendar" && x.permission == "owner"
+  users_calendar = _.filter(response.calendars, (x) -> x.type == "UserCalendar" && x.permission == "owner")
   data.calendar_id = users_calendar[0].id
 
   if object.matter?

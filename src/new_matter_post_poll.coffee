@@ -5,8 +5,8 @@ Zap.new_matter_post_poll = (bundle) ->
   client_ids = results.matters.map (x) ->
     if x.client?
       x.client.id
-  client_ids = client_ids.unique()
-  client_ids = client_ids.filter (x) -> valueExists x
+  client_ids = _.uniq(client_ids)
+  client_ids = _.filter(client_ids, (x) -> Zap.valueExists x)
   clients = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/contacts?ids=#{client_ids.toString()}").contacts
 
   array = []
@@ -30,7 +30,7 @@ Zap.new_matter_post_poll = (bundle) ->
     data.billable = object.billable
     data.maildrop_address = object.maildrop_address
     data.billing_method = object.billing_method
-    client = (clients.filter (x) -> object.client? && x.id == object.client.id)[0]
+    client = _.filter(clients, (x) -> object.client? && x.id == object.client.id)[0]
     if client?
       data.client = Zap.transform_nested_attributes(object.client)
       data.client.type = client.type
