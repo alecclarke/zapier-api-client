@@ -43,6 +43,7 @@ Zap.create_matter_pre_write = (bundle) ->
   data.status = object.status
   data.description = object.description
   data.billable = object.billable
+  data.client_reference = object.client_reference;
   
   if Zap.valueExists object.client_id
     data.client_id = object.client_id
