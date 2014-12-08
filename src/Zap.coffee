@@ -24,12 +24,21 @@ Zap.transform_custom_fields = (bundle, object, parent_type) ->
       custom_fields["#{custom_field_value.custom_field.name}#{Zap.custom_field_association_id_postfix}"] = custom_field_value.value
       # We want the name in the regular field
       if custom_field_value.hasOwnProperty("contact")
-        custom_fields[custom_field_value.custom_field.name] = custom_field_value.contact.name
+        if Zap.valueExists(custom_field_value.contact)
+          custom_fields[custom_field_value.custom_field.name] = custom_field_value.contact.name
+        else
+          custom_fields[custom_field_value.custom_field.name] = null
       if custom_field_value.hasOwnProperty("matter")
-        custom_fields[custom_field_value.custom_field.name] = custom_field_value.matter.name
+        if Zap.valueExists(custom_field_value.matter)
+          custom_fields[custom_field_value.custom_field.name] = custom_field_value.matter.name
+        else
+          custom_fields[custom_field_value.custom_field.name] = null
       if custom_field_value.hasOwnProperty("custom_field_picklist_option")
-        custom_fields[custom_field_value.custom_field.name] = custom_field_value.custom_field_picklist_option.name
-    else
+        if Zap.valueExists(custom_field_value.custom_field_picklist_option)
+          custom_fields[custom_field_value.custom_field.name] = custom_field_value.custom_field_picklist_option.name
+        else
+          custom_fields[custom_field_value.custom_field.name] = null
+  else
       custom_fields[custom_field_value.custom_field.name] = custom_field_value.value
   custom_fields
 
