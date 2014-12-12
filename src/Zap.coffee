@@ -38,7 +38,7 @@ Zap.transform_custom_fields = (bundle, object, parent_type) ->
           custom_fields[custom_field_value.custom_field.name] = custom_field_value.custom_field_picklist_option.name
         else
           custom_fields[custom_field_value.custom_field.name] = null
-  else
+    else
       custom_fields[custom_field_value.custom_field.name] = custom_field_value.value
   custom_fields
 
@@ -47,6 +47,8 @@ Zap.transform_nested_attributes = (object) ->
   data = {"id": object.id, "name": object.name}
   if object.hasOwnProperty("type")
     data["type"] = object.type
+  if object.hasOwnProperty("email")
+    data["email"] = object.email
   data
 
 Zap.flatten_array = (array, default_keys) ->
