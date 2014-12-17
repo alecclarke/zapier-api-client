@@ -7,7 +7,8 @@ Zap.find_practice_area = (bundle, query, not_found) ->
       practice_area = response.practice_area
 
   unless practice_area?
-    response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/practice_areas?query=#{encodeURIComponent(query)}&limit=1")
+    # using limit = 2 because of CLIO-18926
+    response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/practice_areas?query=#{encodeURIComponent(query)}&limit=2")
     if response.practice_areas.length > 0
       practice_area = response.practice_areas[0]
     

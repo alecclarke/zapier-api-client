@@ -6,7 +6,8 @@ Zap.find_matter = (bundle, query, not_found) ->
     if response.matter?
       matter = response.matter
   unless matter?
-    response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/matters?display_number=#{encodeURIComponent(query)}&limit=1")
+    # using limit = 2 because of CLIO-18926
+    response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/matters?display_number=#{encodeURIComponent(query)}&limit=2")
     if response.matters.length > 0
       matter = response.matters[0]
   
