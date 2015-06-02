@@ -1,13 +1,16 @@
 # Zapier doesn't like our objects wrapped so we build it up globally instead
 Zap = {}
 
-Zap.lookup_contact = (bundle, search_string) ->
+Zap.base_api_url = "https://app.goclio.com/api/v2/"
+Zap.build_api_url = (resource_string) ->
+  Zap.base_api_url + resource_string
 
 Zap.custom_field_definitions = {}
 Zap.custom_field_association_id_postfix = " Id"
+
 Zap.transform_custom_fields = (bundle, object, parent_type) ->
   # Load our custom fields if not loaded yet
-  Zap.custom_field_definitions[parent_type] ?= Zap.make_get_request(bundle,"https://app.goclio.com/api/v2/custom_fields?parent_type=#{parent_type}").custom_fields
+  Zap.custom_field_definitions[parent_type] ?= Zap.make_get_request(bundle,"custom_fields?parent_type=#{parent_type}").custom_fields
   
   # Set our defaults for all custom fields
   custom_fields = {}

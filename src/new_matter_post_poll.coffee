@@ -7,7 +7,7 @@ Zap.new_matter_post_poll = (bundle) ->
       x.client.id
   client_ids = _.uniq(client_ids)
   client_ids = _.filter(client_ids, (x) -> Zap.valueExists x)
-  clients = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/contacts?ids=#{client_ids.toString()}").contacts
+  clients = Zap.make_get_request(bundle, "contacts?ids=#{client_ids.toString()}").contacts
 
   array = []
   for object in results.matters

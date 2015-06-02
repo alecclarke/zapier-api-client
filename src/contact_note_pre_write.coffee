@@ -2,7 +2,7 @@ Zap.contact_note_pre_write = (bundle) ->
     outbound = JSON.parse(bundle.request.data)
     #Internal poll for Clio Contact with provided email_address
     # Creating readable JSON object for Clio Contact
-    response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/contacts?query=" + outbound.notes.email)
+    response = Zap.make_get_request(bundle, "contacts?query=" + outbound.notes.email)
     #var for contact id number
     contact_id = undefined
     # If contact doesn't exist create a new contact
@@ -19,7 +19,7 @@ Zap.contact_note_pre_write = (bundle) ->
           address: data.notes.email
         ]
       )
-      create_response = Zap.make_post_request(bundle, "https://app.goclio.com/api/v2/contacts", contact)
+      create_response = Zap.make_post_request(bundle, "contacts", contact)
       contact_id = create_response.contact.id
     else
     # if contact previously existed

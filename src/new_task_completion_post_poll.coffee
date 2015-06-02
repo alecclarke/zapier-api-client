@@ -4,7 +4,7 @@ Zap.new_task_completion_post_poll = (bundle) ->
 
   for field in results.timeline_events
     if field.event_type is "firm_feed_task_completed"
-      task = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/tasks/" + field.subject.id)
+      task = Zap.make_get_request(bundle, "tasks/" + field.subject.id)
       array.push
         actor_id: field.actor.id
         actor_name: field.actor.name

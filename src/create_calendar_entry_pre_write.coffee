@@ -14,7 +14,7 @@ Zap.create_calendar_entry_pre_write = (bundle) ->
     data.start_date_time = object.start_at
     data.end_date_time = object.end_at
   
-  response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/calendars")
+  response = Zap.make_get_request(bundle, "calendars")
   users_calendar = _.filter(response.calendars, (x) -> x.type == "UserCalendar" && x.permission == "owner")
   data.calendar_id = users_calendar[0].id
 

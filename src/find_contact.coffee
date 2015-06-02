@@ -62,7 +62,7 @@ Zap.find_contact_by_id = (bundle, id, search_contact_type) ->
   contact = null
   if isFinite(id)
     # using limit = 2 because of CLIO-18926
-    response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/contacts?ids=#{encodeURIComponent(id)}&limit=2#{Zap.find_contact_type_to_query(search_contact_type)}")
+    response = Zap.make_get_request(bundle, "contacts?ids=#{encodeURIComponent(id)}&limit=2#{Zap.find_contact_type_to_query(search_contact_type)}")
     if response.contacts.length > 0
       contact = response.contacts[0]
   contact
@@ -72,7 +72,7 @@ Zap.find_contact_by_email = (bundle, email, search_contact_type) ->
   # Sanity check on email
   if Zap.valueExists email
     # using limit = 2 because of CLIO-18926
-    response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/contacts?query=#{encodeURIComponent(email)}&limit=2#{Zap.find_contact_type_to_query(search_contact_type)}")
+    response = Zap.make_get_request(bundle, "contacts?query=#{encodeURIComponent(email)}&limit=2#{Zap.find_contact_type_to_query(search_contact_type)}")
     if response.contacts.length > 0
       contact = response.contacts[0]
   contact
@@ -81,7 +81,7 @@ Zap.find_contact_by_name = (bundle, name, search_contact_type) ->
   contact = null
   if Zap.valueExists name
     # using limit = 2 because of CLIO-18926
-    response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/contacts?name=#{encodeURIComponent(name)}&limit=2#{Zap.find_contact_type_to_query(search_contact_type)}")
+    response = Zap.make_get_request(bundle, "contacts?name=#{encodeURIComponent(name)}&limit=2#{Zap.find_contact_type_to_query(search_contact_type)}")
     if response.contacts.length > 0
       contact = response.contacts[0]
   contact
@@ -93,7 +93,7 @@ Zap.create_contact = (bundle, object, contact_type) ->
   # if email set, add it
   if Zap.valueExists object.email
     data["email_addresses"] = [{"name": "Work", "address": object.email}]
-  response = Zap.make_post_request(bundle, "https://app.goclio.com/api/v2/contacts", JSON.stringify({"contact": data}))
+  response = Zap.make_post_request(bundle, "contacts", JSON.stringify({"contact": data}))
   unless response.hasOwnProperty("contact")
     throw new HaltedException('Could not create new contact');
   response.contact
