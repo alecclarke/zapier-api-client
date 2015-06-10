@@ -5,7 +5,7 @@ Zap.create_person_and_matter_pre_write = (bundle) ->
   custom_field_values = request_data.custom_fields
   
   # We are going to need to map our custom field types correctly, thus we need all our custom fields
-  custom_field_definitions = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/custom_fields").custom_fields
+  custom_field_definitions = Zap.make_get_request(bundle, "custom_fields").custom_fields
   contact_custom_field_ids = _.filter(custom_field_definitions, (x) -> x.parent_type == "Contact").map (x) -> x.id
   matter_custom_field_ids = _.filter(custom_field_definitions, (x) -> x.parent_type == "Matter").map (x) -> x.id
   
@@ -27,7 +27,7 @@ Zap.create_person_and_matter_pre_write = (bundle) ->
   bundle.request.data = JSON.stringify(request_data)
   contact_request = Zap.create_person_pre_write(bundle)
   # Run our contact request ourselves
-  contact_response = Zap.make_post_request(bundle, "https://app.goclio.com/api/v2/contacts", contact_request.data)
+  contact_response = Zap.make_post_request(bundle, "contacts", contact_request.data)
 
   # Set our client id
   matter.client_id = contact_response.contact.id

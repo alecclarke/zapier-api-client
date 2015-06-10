@@ -2,7 +2,7 @@ Zap.create_relationship_pre_write = (bundle) ->
   outbound = JSON.parse(bundle.request.data)
   contact_id = null
   contact_data = null
-  contact_response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/contacts?query=" + outbound.relationship.contact.email)
+  contact_response = Zap.make_get_request(bundle, "contacts?query=" + outbound.relationship.contact.email)
   if contact_response.contacts.length > 0
     contact_id = contact_response.contacts[0].id
   else
@@ -16,7 +16,7 @@ Zap.create_relationship_pre_write = (bundle) ->
         address: outbound.relationship.contact.email
       ]
     )
-    contact_response = Zap.make_post_request(bundle, "https://app.goclio.com/api/v2/contacts", contact_data)
+    contact_response = Zap.make_post_request(bundle, "contacts", contact_data)
     contact_id = contact_response.contact.id
   outbound = relationship:
     description: outbound.relationship.description

@@ -20,7 +20,7 @@ Zap.find_user_by_id = (bundle, id, subscription_plan) ->
   user = null
   if isFinite(id)
     # using limit = 2 because of CLIO-18926
-    response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/users?ids=#{encodeURIComponent(id)}#{Zap.find_user_subscription_plan_to_query(subscription_plan)}&limit=2")
+    response = Zap.make_get_request(bundle, "users?ids=#{encodeURIComponent(id)}#{Zap.find_user_subscription_plan_to_query(subscription_plan)}&limit=2")
     if response.users.length > 0
           user = response.users[0]
   user
@@ -29,7 +29,7 @@ Zap.find_user_by_query = (bundle, query, subscription_plan) ->
   user = null
   if Zap.valueExists query
     # using limit = 2 because of CLIO-18926
-    response = Zap.make_get_request(bundle, "https://app.goclio.com/api/v2/users?query=#{encodeURIComponent(query)}#{Zap.find_user_subscription_plan_to_query(subscription_plan)}&limit=2")
+    response = Zap.make_get_request(bundle, "users?query=#{encodeURIComponent(query)}#{Zap.find_user_subscription_plan_to_query(subscription_plan)}&limit=2")
     if response.users.length > 0
       user = response.users[0]
   user

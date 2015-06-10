@@ -3,7 +3,7 @@ Zap.create_group_pre_write = (bundle)->
   array=[]
   type = outbound.group.type
   #get list of users 
-  users_response = Zap.make_get_request(bundle,"https://app.goclio.com/api/v2/users")
+  users_response = Zap.make_get_request(bundle,"users")
   #if group.type is attorney populate array with only "Attorney" users
   if type is "Attorney"
 	  for field in users_response.users
