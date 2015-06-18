@@ -1,20 +1,11 @@
 # Zapier doesn't like our objects wrapped so we build it up globally instead
 Zap = {}
 
-# replace what this returns if you're using a different URL
-# you can ignore the top level domain
-Zap.base_api_url = (top_level_domain) ->
-  "https://app.goclio." + top_level_domain + "/api/v2/"
-
-Zap.build_api_url = (resource_string, top_level_domain) ->
-  cleaned_top_level_domain = Zap.clean_top_level_domain(top_level_domain)
-  Zap.base_api_url(cleaned_top_level_domain) + resource_string
-
-Zap.clean_top_level_domain = (top_level_domain) ->
-  if top_level_domain in ["com", "eu"]
-    return top_level_domain
-  else
-    return "com" # default to .com
+Zap.build_api_url = (domain, resource_string) ->
+  # because we added domain to the auth fields later, a domain might not always get passed in
+  # in that case default to the standard Clio URL, because that's all we had then
+  domain = "https://app.goclio.com" if !!domain
+  return domain + "/api/v2/" + resource_string
 
 Zap.custom_field_definitions = {}
 Zap.custom_field_association_id_postfix = " Id"
