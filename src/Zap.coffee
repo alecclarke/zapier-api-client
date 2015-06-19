@@ -4,7 +4,7 @@ Zap = {}
 Zap.build_api_url = (domain, resource_string) ->
   # because we added domain to the auth fields later, a domain might not always get passed in
   # in that case default to the standard Clio URL, because that's all we had then
-  domain = "https://app.goclio.com" if !!domain
+  domain = "https://app.goclio.com" if not domain
   return domain + "/api/v2/" + resource_string
 
 Zap.custom_field_definitions = {}
