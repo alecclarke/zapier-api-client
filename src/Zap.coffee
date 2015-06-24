@@ -1,9 +1,11 @@
 # Zapier doesn't like our objects wrapped so we build it up globally instead
 Zap = {}
 
-Zap.base_api_url = "https://app.goclio.com/api/v2/"
-Zap.build_api_url = (resource_string) ->
-  Zap.base_api_url + resource_string
+Zap.build_api_url = (domain, resource_string) ->
+  # because we added domain to the auth fields later, a domain might not always get passed in
+  # in that case default to the standard Clio URL, because that's all we had then
+  domain = "https://app.goclio.com" if not domain
+  return domain + "/api/v2/" + resource_string
 
 Zap.custom_field_definitions = {}
 Zap.custom_field_association_id_postfix = " Id"
