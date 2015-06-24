@@ -1,7 +1,7 @@
 Zap.pre_subscribe = (bundle) ->
   payload = {web_hook_subscription: {url: bundle.target_url, event_type: bundle.event, secret: ""}}
   return {
-    url: Zap.build_api_url("web_hook_subscriptions"),
+    url: Zap.build_api_url(bundle.auth_fields.domain, "web_hook_subscriptions"),
     method: "POST",
     auth: bundle.request.auth,
     headers: bundle.request.headers,
@@ -15,7 +15,7 @@ Zap.post_subscribe = (bundle) ->
 
 Zap.pre_unsubscribe = (bundle) ->
   return {
-    url: Zap.build_api_url("web_hook_subscriptions/" + bundle.subscribe_data["id"]),
+    url: Zap.build_api_url(bundle.auth_fields.domain, "web_hook_subscriptions/" + bundle.subscribe_data["id"]),
     method: "DELETE",
     auth: bundle.request.auth,
     headers: bundle.request.headers,
