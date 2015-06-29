@@ -1,8 +1,10 @@
 Zap.new_task_post_poll = (bundle) ->
   results = JSON.parse(bundle.response.content)
-  
+  Zap.process_task_response_content(results)
+
+Zap.process_task_response_content = (response_content) ->
   array = []
-  for object in results.tasks
+  for object in response_content.tasks
     # The format of this data MUST match the sample data format in triggers "Sample Result"
     # To get a sample, build a new object with good data and create a Zap, you should see
     # bundle output (from scripting editor quicklinks) once you try and add a field in the
