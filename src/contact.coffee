@@ -34,6 +34,15 @@ Zap.new_contact_post_poll = (bundle) ->
     array.push data
   array
 
+Zap.create_contact_post_custom_action_fields = (bundle) ->
+  Zap.transform_custom_action_fields(bundle, false)
+
+Zap.create_person_post_custom_action_fields = (bundle) ->
+  Zap.transform_custom_action_fields(bundle, false)
+
+Zap.create_company_post_custom_action_fields = (bundle) ->
+  Zap.transform_custom_action_fields(bundle, false)
+
 # Helper methods
 
 Zap.create_contact_pre_write = (bundle, contact_type) ->

@@ -146,6 +146,12 @@ Zap.new_matter_post_poll = (bundle) ->
     array.push data
   array
 
+Zap.create_matter_post_custom_action_fields = (bundle) ->
+  Zap.transform_custom_action_fields(bundle, false)
+
+Zap.create_person_and_matter_post_custom_action_fields = (bundle) ->
+  Zap.transform_custom_action_fields(bundle, true)
+
 # Helper methods
 
 Zap.find_matter = (bundle, query, not_found) ->
