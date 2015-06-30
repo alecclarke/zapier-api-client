@@ -1,3 +1,7 @@
+# Zapier hooks
+
+# Helper methods
+
 Zap.find_user = (bundle, query, not_found, subscription_plan) ->
   user = null
 
