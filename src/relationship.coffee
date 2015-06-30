@@ -1,3 +1,5 @@
+# Zapier hooks
+
 Zap.create_relationship_pre_write = (bundle) ->
   outbound = JSON.parse(bundle.request.data)
   contact_id = null
@@ -26,3 +28,6 @@ Zap.create_relationship_pre_write = (bundle) ->
       id: contact_id
   bundle.request.data = JSON.stringify(outbound)
   bundle.request
+
+
+# Helper methods
