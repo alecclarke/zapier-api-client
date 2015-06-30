@@ -1,4 +1,6 @@
-# Zapier hooks
+################################################################################
+#### Zapier hooks
+################################################################################
 
 Zap.create_calendar_entry_pre_write = (bundle) ->
   request_data = JSON.parse(bundle.request.data)
@@ -53,4 +55,6 @@ Zap.new_calendar_entry_post_poll = (bundle) ->
     array.push data
   array
 
-# Helper methods
+################################################################################
+#### Helper methods
+################################################################################

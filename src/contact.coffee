@@ -1,4 +1,6 @@
-# Zapier hooks
+################################################################################
+#### Zapier hooks
+################################################################################
 
 Zap.create_person_pre_write = (bundle) ->
   Zap.create_contact_pre_write(bundle, "Person")
@@ -43,7 +45,9 @@ Zap.create_person_post_custom_action_fields = (bundle) ->
 Zap.create_company_post_custom_action_fields = (bundle) ->
   Zap.transform_custom_action_fields(bundle, false)
 
-# Helper methods
+################################################################################
+#### Helper methods
+################################################################################
 
 Zap.create_contact_pre_write = (bundle, contact_type) ->
   request_data = JSON.parse(bundle.request.data)

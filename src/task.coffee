@@ -1,4 +1,6 @@
-# Zapier hooks
+################################################################################
+#### Zapier hooks
+################################################################################
 
 Zap.create_task_pre_write = (bundle) ->
   request_data = JSON.parse(bundle.request.data)
@@ -42,7 +44,9 @@ Zap.new_task_webhook_catch_hook = (bundle) ->
   # last, format json into array
   return Zap.process_task_response_content(response_content)
 
-# Helper methods
+################################################################################
+#### Helper methods
+################################################################################
 
 Zap.process_task_response_content = (response_content) ->
   array = []

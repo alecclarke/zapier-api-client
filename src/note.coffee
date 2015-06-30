@@ -1,4 +1,6 @@
-# Zapier hooks
+################################################################################
+#### Zapier hooks
+################################################################################
 
 Zap.create_contact_note_pre_write = (bundle) ->
   Zap.create_note_pre_write(bundle, "Contact")
@@ -6,7 +8,9 @@ Zap.create_contact_note_pre_write = (bundle) ->
 Zap.create_matter_note_pre_write = (bundle) ->
   Zap.create_note_pre_write(bundle, "Matter")
 
-# Helper methods
+################################################################################
+#### Helper methods
+################################################################################
 
 Zap.create_note_pre_write = (bundle, regarding_type) ->
   request_data = JSON.parse(bundle.request.data)

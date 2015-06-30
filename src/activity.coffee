@@ -1,4 +1,6 @@
-# Zapier hooks
+################################################################################
+#### Zapier hooks
+################################################################################
 
 Zap.create_time_entry_pre_write = (bundle) ->
   Zap.create_activity_pre_write(bundle, "TimeEntry")
@@ -34,7 +36,9 @@ Zap.new_activity_post_poll = (bundle) ->
     array.push data
   array
 
-# Helper methods
+################################################################################
+#### Helper methods
+################################################################################
 
 Zap.create_activity_pre_write = (bundle, activity_type) ->
   request_data = JSON.parse(bundle.request.data)
@@ -63,4 +67,4 @@ Zap.create_activity_pre_write = (bundle, activity_type) ->
       data.matter_id = matter.id
   
   bundle.request.data = JSON.stringify({"activity": data})
-  bundle.request   
+  bundle.request

@@ -1,4 +1,6 @@
-# Zapier hooks
+################################################################################
+#### Zapier hooks
+################################################################################
 
 Zap.create_communication_pre_write = (bundle) ->
   request_data = JSON.parse(bundle.request.data)
@@ -58,4 +60,6 @@ Zap.new_communication_post_poll = (bundle) ->
     array.push data
   array
 
-# Helper methods
+################################################################################
+#### Helper methods
+################################################################################

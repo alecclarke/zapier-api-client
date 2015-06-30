@@ -1,4 +1,6 @@
-# Zapier hooks
+################################################################################
+#### Zapier hooks
+################################################################################
 
 Zap.create_matter_pre_write = (bundle) ->
   request_data = JSON.parse(bundle.request.data)
@@ -152,7 +154,9 @@ Zap.create_matter_post_custom_action_fields = (bundle) ->
 Zap.create_person_and_matter_post_custom_action_fields = (bundle) ->
   Zap.transform_custom_action_fields(bundle, true)
 
-# Helper methods
+################################################################################
+#### Helper methods
+################################################################################
 
 Zap.find_matter = (bundle, query, not_found) ->
   # first check if there is a matter #show for this query, ie it is a matter id

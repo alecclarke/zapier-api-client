@@ -1,7 +1,9 @@
 # Zapier doesn't like our objects wrapped so we build it up globally instead
 Zap = {}
 
-# Request type methods
+################################################################################
+#### Request methods
+################################################################################
 
 Zap.build_api_url = (domain, resource_string) ->
   # because we added domain to the auth fields later, a domain might not always get passed in
@@ -27,7 +29,9 @@ Zap.make_post_request = (bundle, resource_url, data) ->
   url = Zap.build_api_url(bundle.auth_fields.domain, resource_url)
   JSON.parse z.request(Zap.build_request(bundle, url, "POST", data)).content
 
-# Helper methods
+################################################################################
+#### Helper methods
+################################################################################
 
 Zap.typeIsArray = Array.isArray || ( value ) -> return {}.toString.call( value ) is '[object Array]'
 Zap.valueExists = (value) -> value not in ["", null, undefined]
@@ -48,7 +52,9 @@ Zap.flatten_array = (array, default_keys) ->
   
   return_data 
 
-# Transformation methods
+################################################################################
+#### Transformation methods
+################################################################################
 
 Zap.custom_field_definitions = {}
 Zap.custom_field_association_id_postfix = " Id"

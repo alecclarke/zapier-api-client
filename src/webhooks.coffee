@@ -1,3 +1,7 @@
+################################################################################
+#### Zapier hooks
+################################################################################
+
 Zap.pre_subscribe = (bundle) ->
   payload = {web_hook_subscription: {url: bundle.target_url, event_type: bundle.event, secret: ""}}
   return {
