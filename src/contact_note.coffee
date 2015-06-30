@@ -1,3 +1,5 @@
+# Zapier hooks
+
 Zap.contact_note_pre_write = (bundle) ->
     outbound = JSON.parse(bundle.request.data)
     #Internal poll for Clio Contact with provided email_address
@@ -38,3 +40,5 @@ Zap.contact_note_pre_write = (bundle) ->
         id: contact_id
     bundle.request.data = JSON.stringify(outbound)
     bundle.request
+
+# Helper methods
