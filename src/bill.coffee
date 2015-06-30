@@ -1,3 +1,5 @@
+# Zapier Hooks
+
 Zap.new_bill_post_poll = (bundle) ->
   results = JSON.parse(bundle.response.content)
   
@@ -34,3 +36,5 @@ Zap.new_bill_post_poll = (bundle) ->
     data.client = Zap.transform_nested_attributes(object.client)
     array.push data
   array
+
+# Helper methods
