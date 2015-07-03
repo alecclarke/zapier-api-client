@@ -67,7 +67,7 @@ Zap.create_matter_pre_write = (bundle) ->
   bundle.request.data = JSON.stringify({"matter": data})
   bundle.request
 
-  Zap.create_person_and_matter_pre_write = (bundle) ->
+Zap.create_person_and_matter_pre_write = (bundle) ->
   request_data = JSON.parse(bundle.request.data)
   matter = request_data.matter
   contact = request_data.contact
