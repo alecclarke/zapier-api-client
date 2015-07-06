@@ -14,7 +14,7 @@ Zap.create_matter_pre_write = (bundle) ->
   data.client_reference = object.client_reference;
   data.billable = object.billable;
   
-  if Zap.valueExists object.client_id
+  if Zap.value_exists object.client_id
     data.client_id = object.client_id
   else if object.client?
     contact = Zap.find_or_create_contact(bundle, object.client, object.client.question)
@@ -38,22 +38,22 @@ Zap.create_matter_pre_write = (bundle) ->
   
   for own custom_field_id, custom_field_data of custom_field_values
     for own custom_field_type, custom_field_value_raw of custom_field_data
-      if Zap.valueExists custom_field_value_raw
+      if Zap.value_exists custom_field_value_raw
         custom_field_value = null
         data.custom_field_values ?= []
         if custom_field_type == "contact"
           cf_data = {"name": custom_field_value_raw}
-          if request_data.custom_field_questions_email? && Zap.valueExists request_data.custom_field_questions_email[custom_field_id]
+          if request_data.custom_field_questions_email? && Zap.value_exists request_data.custom_field_questions_email[custom_field_id]
             cf_data["email"] = request_data.custom_field_questions_email[custom_field_id]
           question = null
-          if request_data.custom_field_questions? && Zap.valueExists request_data.custom_field_questions[custom_field_id]
+          if request_data.custom_field_questions? && Zap.value_exists request_data.custom_field_questions[custom_field_id]
             question = request_data.custom_field_questions[custom_field_id]
           contact = Zap.find_or_create_contact(bundle, cf_data, question)
           if contact?
             custom_field_value = contact.id
         else if custom_field_type == "matter"
           question = null
-          if request_data.custom_field_questions? && Zap.valueExists request_data.custom_field_questions[custom_field_id]
+          if request_data.custom_field_questions? && Zap.value_exists request_data.custom_field_questions[custom_field_id]
             question = request_data.custom_field_questions[custom_field_id]
           matter = Zap.find_matter(bundle, custom_field_value_raw, question)
           if matter?
@@ -111,7 +111,7 @@ Zap.new_matter_post_poll = (bundle) ->
     if x.client?
       x.client.id
   client_ids = _.uniq(client_ids)
-  client_ids = _.filter(client_ids, (x) -> Zap.valueExists x)
+  client_ids = _.filter(client_ids, (x) -> Zap.value_exists x)
   clients = Zap.make_get_request(bundle, "contacts?ids=#{client_ids.toString()}").contacts
 
   array = []

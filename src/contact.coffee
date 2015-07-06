@@ -56,13 +56,13 @@ Zap.create_contact_pre_write = (bundle, contact_type) ->
   
   data = {}
   data.type = contact_type
-  if Zap.valueExists object.first_name and Zap.valueExists object.last_name
+  if Zap.value_exists object.first_name and Zap.value_exists object.last_name
     data.first_name = object.first_name
     data.last_name = object.last_name
   else
     data.name = object.name
 
-  if Zap.valueExists object.company_id
+  if Zap.value_exists object.company_id
     data.company_id = object.company_id
   else if contact_type == "Person" && object.company?
     company = Zap.find_or_create_contact(bundle, object.company, object.company.question, "Company")
@@ -94,22 +94,22 @@ Zap.create_contact_pre_write = (bundle, contact_type) ->
   
   for own custom_field_id, custom_field_data of custom_field_values
     for own custom_field_type, custom_field_value_raw of custom_field_data
-      if Zap.valueExists custom_field_value_raw
+      if Zap.value_exists custom_field_value_raw
         custom_field_value = null
         data.custom_field_values ?= []
         if custom_field_type == "contact"
           cf_data = {"name": custom_field_value_raw}
-          if request_data.custom_field_questions_email? && Zap.valueExists request_data.custom_field_questions_email[custom_field_id]
+          if request_data.custom_field_questions_email? && Zap.value_exists request_data.custom_field_questions_email[custom_field_id]
             cf_data["email"] = request_data.custom_field_questions_email[custom_field_id]
           question = null
-          if request_data.custom_field_questions? && Zap.valueExists request_data.custom_field_questions[custom_field_id]
+          if request_data.custom_field_questions? && Zap.value_exists request_data.custom_field_questions[custom_field_id]
             question = request_data.custom_field_questions[custom_field_id]
           contact = Zap.find_or_create_contact(bundle, cf_data, question)
           if contact?
             custom_field_value = contact.id
         else if custom_field_type == "matter"
           question = null
-          if request_data.custom_field_questions? && Zap.valueExists request_data.custom_field_questions[custom_field_id]
+          if request_data.custom_field_questions? && Zap.value_exists request_data.custom_field_questions[custom_field_id]
             question = request_data.custom_field_questions[custom_field_id]
           matter = Zap.find_matter(bundle, custom_field_value_raw, question)
           if matter?
@@ -160,11 +160,11 @@ Zap.find_user_or_contact = (bundle, object) ->
     found_object ?= Zap.find_user_by_id(bundle, bundle.name)
     found_object ?= Zap.find_contact_by_id(bundle, bundle.name)
     
-  else if Zap.valueExists object.email
+  else if Zap.value_exists object.email
     found_object ?= Zap.find_user_by_query(bundle, object.email)
     found_object ?= Zap.find_contact_by_email(bundle, object.email)
     
-  else if Zap.valueExists object.name
+  else if Zap.value_exists object.name
     found_object ?= Zap.find_user_by_query(bundle, object.name)
     found_object ?= Zap.find_contact_by_name(bundle, object.name)
   
@@ -176,10 +176,10 @@ Zap.find_contact = (bundle, object, search_contact_type) ->
   if isFinite(object.name)
     contact ?= Zap.find_contact_by_id(bundle, object.name, search_contact_type)
   # if email set, try to find by it
-  else if Zap.valueExists object.email 
+  else if Zap.value_exists object.email 
     contact ?= Zap.find_contact_by_email(bundle, object.email, search_contact_type)
   # If no email or not found, try with the name
-  else if Zap.valueExists object.name
+  else if Zap.value_exists object.name
     contact ?= Zap.find_contact_by_name(bundle, object.name, search_contact_type)
   contact
 
@@ -195,7 +195,7 @@ Zap.find_contact_by_id = (bundle, id, search_contact_type) ->
 Zap.find_contact_by_email = (bundle, email, search_contact_type) ->
   contact = null
   # Sanity check on email
-  if Zap.valueExists email
+  if Zap.value_exists email
     # using limit = 2 because of CLIO-18926
     response = Zap.make_get_request(bundle, "contacts?query=#{encodeURIComponent(email)}&limit=2#{Zap.find_contact_type_to_query(search_contact_type)}")
     if response.contacts.length > 0
@@ -204,7 +204,7 @@ Zap.find_contact_by_email = (bundle, email, search_contact_type) ->
 
 Zap.find_contact_by_name = (bundle, name, search_contact_type) ->
   contact = null
-  if Zap.valueExists name
+  if Zap.value_exists name
     # using limit = 2 because of CLIO-18926
     response = Zap.make_get_request(bundle, "contacts?name=#{encodeURIComponent(name)}&limit=2#{Zap.find_contact_type_to_query(search_contact_type)}")
     if response.contacts.length > 0
@@ -212,11 +212,11 @@ Zap.find_contact_by_name = (bundle, name, search_contact_type) ->
   contact
 
 Zap.create_contact = (bundle, object, contact_type) ->
-  if Zap.valueMissing object.name
+  if Zap.value_missing object.name
     throw new HaltedException("Could not create #{contact_type} without a name")
   data = { "type": contact_type, "name": object.name }
   # if email set, add it
-  if Zap.valueExists object.email
+  if Zap.value_exists object.email
     data["email_addresses"] = [{"name": "Work", "address": object.email}]
   response = Zap.make_post_request(bundle, "contacts", JSON.stringify({"contact": data}))
   unless response.hasOwnProperty("contact")
@@ -224,7 +224,7 @@ Zap.create_contact = (bundle, object, contact_type) ->
   response.contact
   
 Zap.find_contact_type_to_query = (search_contact_type) ->
-  if Zap.valueExists search_contact_type
+  if Zap.value_exists search_contact_type
     search_contact_type= "&type=#{encodeURIComponent(search_contact_type)}"
   else
     search_contact_type= ""

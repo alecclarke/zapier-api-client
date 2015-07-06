@@ -22,8 +22,7 @@ Zap.build_request = (bundle, url, method, data) ->
 
 Zap.make_get_request =  (bundle, resource_url) ->
   url = Zap.build_api_url(bundle.auth_fields.domain, resource_url)
-  content = z.request(Zap.build_request(bundle, url, "GET", null)).content
-  JSON.parse content
+  JSON.parse = z.request(Zap.build_request(bundle, url, "GET", null)).content
 
 Zap.make_post_request = (bundle, resource_url, data) ->
   url = Zap.build_api_url(bundle.auth_fields.domain, resource_url)
@@ -33,9 +32,12 @@ Zap.make_post_request = (bundle, resource_url, data) ->
 #### Helper methods
 ################################################################################
 
-Zap.typeIsArray = Array.isArray || ( value ) -> return {}.toString.call( value ) is '[object Array]'
-Zap.valueExists = (value) -> value not in ["", null, undefined]
-Zap.valueMissing = (value) -> value in ["", null, undefined]
+Zap.value_exists = (value) ->
+  value not in ["", null, undefined]
+
+Zap.value_missing = (value) ->
+  value in ["", null, undefined]
+
 Zap.flatten_array = (array, default_keys) ->
   # Find our defaults
   if array.length > 0
@@ -78,17 +80,17 @@ Zap.transform_custom_fields = (bundle, object, parent_type) ->
       custom_fields["#{custom_field_value.custom_field.name}#{Zap.custom_field_association_id_postfix}"] = custom_field_value.value
       # We want the name in the regular field
       if custom_field_value.hasOwnProperty("contact")
-        if Zap.valueExists(custom_field_value.contact)
+        if Zap.value_exists(custom_field_value.contact)
           custom_fields[custom_field_value.custom_field.name] = custom_field_value.contact.name
         else
           custom_fields[custom_field_value.custom_field.name] = null
       if custom_field_value.hasOwnProperty("matter")
-        if Zap.valueExists(custom_field_value.matter)
+        if Zap.value_exists(custom_field_value.matter)
           custom_fields[custom_field_value.custom_field.name] = custom_field_value.matter.name
         else
           custom_fields[custom_field_value.custom_field.name] = null
       if custom_field_value.hasOwnProperty("custom_field_picklist_option")
-        if Zap.valueExists(custom_field_value.custom_field_picklist_option)
+        if Zap.value_exists(custom_field_value.custom_field_picklist_option)
           custom_fields[custom_field_value.custom_field.name] = custom_field_value.custom_field_picklist_option.name
         else
           custom_fields[custom_field_value.custom_field.name] = null
