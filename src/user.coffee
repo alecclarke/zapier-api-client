@@ -1,3 +1,13 @@
+################################################################################
+#### Zapier hooks
+################################################################################
+
+
+
+################################################################################
+#### Helper methods
+################################################################################
+
 Zap.find_user = (bundle, query, not_found, subscription_plan) ->
   user = null
 
@@ -27,7 +37,7 @@ Zap.find_user_by_id = (bundle, id, subscription_plan) ->
 
 Zap.find_user_by_query = (bundle, query, subscription_plan) ->
   user = null
-  if Zap.valueExists query
+  if Zap.value_exists query
     # using limit = 2 because of CLIO-18926
     response = Zap.make_get_request(bundle, "users?query=#{encodeURIComponent(query)}#{Zap.find_user_subscription_plan_to_query(subscription_plan)}&limit=2")
     if response.users.length > 0
@@ -35,7 +45,7 @@ Zap.find_user_by_query = (bundle, query, subscription_plan) ->
   user
 
 Zap.find_user_subscription_plan_to_query = (subscription_plan) ->
-  if Zap.valueExists subscription_plan
+  if Zap.value_exists subscription_plan
     subscription_plan = "&subscription_plan=#{encodeURIComponent(subscription_plan)}"
   else
     subscription_plan = ""
