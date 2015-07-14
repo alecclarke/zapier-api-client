@@ -79,8 +79,7 @@ Zap.create_contact_pre_write = (bundle, contact_type) ->
     email_address_type ?= "Work"
     data.email_addresses = [{"name": email_address_type, "address": object.email_address.address}]
 
-  if object.address? && (object.address.street? || object.address.city? || 
-  object.address.province? || object.address.postal_code?)
+  if object.address? 
     address_type = object.address.name
     address_type ?= "Work"
     data.addresses = [{
